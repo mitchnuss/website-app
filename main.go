@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"time"
 )
@@ -28,8 +29,10 @@ func main() {
 		if err := templates.ExecuteTemplate(w, "website-template.html", website); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
+		t1 := time.Now()
+		t2 := time.Now()
+		log.Printf("[%s] %q %v\n", r.Method, r.URL.String(), t2.Sub(t1))
 	})
-
 	fmt.Println("Listening")
 	fmt.Println(http.ListenAndServe(":8080", nil))
 }
